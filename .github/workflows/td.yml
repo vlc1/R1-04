@@ -28,6 +28,12 @@ jobs:
           -o output/1.tex
           td/1.md
 
+    - name: LaTeX
+      uses: xu-cheng/latex-action@v2
+      with:
+        working_directory: output
+        root_file: 1.tex
+
     - name: Artifacts
       uses: actions/upload-artifact@v2
       with:
