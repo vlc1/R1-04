@@ -3,7 +3,7 @@ name: Build TD files
 on:
   push:
     branches:
-      - artifacts
+      - master
 
 jobs:
   build-td-files:
