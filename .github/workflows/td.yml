@@ -25,7 +25,7 @@ jobs:
           -s -N
           -f markdown
           -t latex
-          -o output/1.pdf
+          -o output/1.tex
           td/1.md
 
     - name: Artifacts
