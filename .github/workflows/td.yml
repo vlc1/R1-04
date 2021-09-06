@@ -15,9 +15,22 @@ jobs:
       with:
         persist-credentials: false
 
-    - name: Archive production artifacts
+    - name: Create output directory
+      run: mkdir output
+
+    - name: Pandoc
+      uses: docker://pandoc/core:2.9
+      with:
+        args: >-
+          -s -N
+          -f markdown
+          -t latex
+          -o output/1.pdf
+          td/1.md
+
+    - name: Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: td1
-        path: td/1.md
+        path: output/1.pdf
 
