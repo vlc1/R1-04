@@ -3,7 +3,7 @@ name: build TD files
 on:
   push:
     branches:
-      - gh-action-array
+      - master
 
 jobs:
   convert-via-pandoc:
@@ -31,8 +31,8 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         working_directory: output
-        root_file: |
-          1.tex
+        root_file: "*.tex"
+        glob_root_file: true
 
     - name: artifacts
       uses: actions/upload-artifact@v2
