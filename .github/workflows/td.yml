@@ -3,40 +3,30 @@ name: Build TD files
 on:
   push:
     branches:
-      - master
+      - gh-action-array
 
 jobs:
-  build-td-files:
+  convert-via-pandoc:
     runs-on: ubuntu-latest
+    container:
+      image: docker://pandoc/core:2.9
+      options: --entrypoint=sh
     steps:
-
     - name: Checkout
       uses: actions/checkout@v2
       with:
         persist-credentials: false
-
-    - name: Create output directory
-      run: mkdir output
-
-    - name: Pandoc
-      uses: docker://pandoc/core:2.9
-      with:
-        args: >-
-          -s -N
-          -f markdown
-          -t latex
-          -o output/1.tex
-          td/1.md
-
-    - name: LaTeX
-      uses: xu-cheng/latex-action@v2
-      with:
-        working_directory: output
-        root_file: 1.tex
-
+    - name: create output directories
+      run: |
+        for d in */; do
+          mkdir -p output/$d
+        done
+    - name: convert md to tex
+      run: |
+        find ./ -iname '*.md' -type f -exec sh -c 'pandoc ${0} -o output/${0%.md}.tex' {} \;
     - name: Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: td1
-        path: output/1.pdf
+        name: td
+        path: output
 
