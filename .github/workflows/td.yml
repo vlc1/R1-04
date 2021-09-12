@@ -3,7 +3,7 @@ name: build TD files
 on:
   push:
     branches:
-      - inkscape
+      - master
 
 jobs:
   convert-via-pandoc:
