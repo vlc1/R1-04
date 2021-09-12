@@ -59,7 +59,7 @@ jobs:
 
     - name: convert svg to pdf
       run: |
-        find ./ -iname '*.svg' -type f -exec sh -c 'inkscape --export-type="pdf" --export-filename output/$(basename $0 .svg).pdf ${0}' {} \;
+        find ./ -iname '*.svg' -type f -exec sh -c 'inkscape --export-area-drawing --without-gui --export-pdf=output/$(basename $0 .svg).pdf --file=${0}' {} \;
 
     - name: artifacts
       uses: actions/upload-artifact@v2
