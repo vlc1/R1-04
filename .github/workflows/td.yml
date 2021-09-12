@@ -3,7 +3,7 @@ name: build TD files
 on:
   push:
     branches:
-      - master
+      - inkscape
 
 jobs:
   convert-via-pandoc:
@@ -38,5 +38,32 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: files
+        path: output/*.pdf
+
+  convert-via-inkscape:
+    runs-on: ubuntu-latest
+    container:
+
+      image: docker://johnodon/inkscape
+      options: --entrypoint=sh
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: create output directories
+      run: mkdir output
+
+    - name: convert svg to pdf
+      run: |
+        find ./ -iname '*.svg' -type f -exec sh -c 'inkscape --export-type="pdf" --export-filename output/$(basename $0 .svg).pdf ${0}' {} \;
+
+    - name: artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: images
         path: output/*.pdf
 
