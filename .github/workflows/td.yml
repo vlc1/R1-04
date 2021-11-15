@@ -23,6 +23,9 @@ jobs:
     - name: create output directories
       run: mkdir output
 
+    - name: copy image files
+      run: cp td/*.pdf output/.
+
     - name: convert md to tex
       run: |
         find ./ -iname '*.md' -type f -exec sh -c 'pandoc -s -N ${0} -o output/$(basename $0 .md).tex' {} \;
